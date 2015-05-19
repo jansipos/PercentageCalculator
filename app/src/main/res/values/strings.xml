@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Percentage Calculator</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="final_price">0</string>
+</resources>
