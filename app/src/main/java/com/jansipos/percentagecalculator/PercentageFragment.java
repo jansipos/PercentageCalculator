@@ -1,6 +1,9 @@
 package com.jansipos.percentagecalculator;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -23,6 +26,8 @@ public class PercentageFragment extends Fragment {
     private double initialPrice;
     private double finalPrice;
 
+    public static final int DEFAULT_PERCENTAGE = 20;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,9 +44,9 @@ public class PercentageFragment extends Fragment {
         initialPriceEdit = (EditText) v.findViewById(R.id.initial_price);
         percentageBar = (SeekBar) v.findViewById(R.id.seek_bar);
 
-        percentageView.setText("20 %");
+        percentageView.setText(DEFAULT_PERCENTAGE + " %");
 
-        percent = 20;
+        percent = DEFAULT_PERCENTAGE;
         initialPrice = 0;
         finalPrice = 0;
 
@@ -100,4 +105,15 @@ public class PercentageFragment extends Fragment {
         finalPriceView.setText(String.format("%.2f", finalPrice));
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+        String tempPercent = preferences.getString("pref_percent", String.valueOf(DEFAULT_PERCENTAGE));
+        percentageView.setText(tempPercent + " %");
+
+        percent = Integer.valueOf(tempPercent);
+    }
 }
