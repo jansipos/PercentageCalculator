@@ -123,12 +123,15 @@ public class PercentageFragment extends Fragment {
 
                 percentageBar.setProgress(percent / 5);
                 percentageView.setText(tempPercent + " %");
+
+                if (initialPrice != 0)
+                    calculateAndSetFinalPrice();
             }
             else
                 throw new NumberFormatException();
         }
         catch (NumberFormatException e) {
-            Toast.makeText(getActivity(), "You have entered an invalid value", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "Invalid default percentage", Toast.LENGTH_LONG).show();
         }
     }
 }
