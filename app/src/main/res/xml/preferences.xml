@@ -3,6 +3,7 @@
     <EditTextPreference
         android:key="pref_percent"
         android:title="@string/pref_percent"
+        android:summary="@string/pref_percent_summ"
         android:defaultValue="@string/default_percent"/>
 
 </PreferenceScreen>

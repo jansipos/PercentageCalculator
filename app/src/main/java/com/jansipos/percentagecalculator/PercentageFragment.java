@@ -1,6 +1,5 @@
 package com.jansipos.percentagecalculator;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -13,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class PercentageFragment extends Fragment {
 
@@ -51,8 +51,11 @@ public class PercentageFragment extends Fragment {
         finalPrice = 0;
 
         initialPriceEdit.addTextChangedListener(new TextWatcher() {
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            public void afterTextChanged(Editable s) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void afterTextChanged(Editable s) {
+            }
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
@@ -112,8 +115,20 @@ public class PercentageFragment extends Fragment {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         String tempPercent = preferences.getString("pref_percent", String.valueOf(DEFAULT_PERCENTAGE));
-        percentageView.setText(tempPercent + " %");
 
-        percent = Integer.valueOf(tempPercent);
+        try {
+            percent = Integer.valueOf(tempPercent);
+
+            if (percent % 5 == 0 && percent > 0 && percent <= 100) {
+
+                percentageBar.setProgress(percent / 5);
+                percentageView.setText(tempPercent + " %");
+            }
+            else
+                throw new NumberFormatException();
+        }
+        catch (NumberFormatException e) {
+            Toast.makeText(getActivity(), "You have entered an invalid value", Toast.LENGTH_LONG).show();
+        }
     }
 }
